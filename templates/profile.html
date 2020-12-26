@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Hello, {{g.user.name}} {{g.user.surname}}</h1>
+<h2>Your address is {{g.user.address}}</h2>
+<hr>
+
+<h3>Your orders:</h3>
+{% if g.user.orders %}
+<table border = 1>
+    <tr>
+       <th> order_id </th>
+       <th> product_id </th>
+       <th> status </th>
+    </tr>
+    {% for order in g.user.orders %}
+
+     <tr>
+       <td> {{ order.id }} </td>
+       <td> {{ order.product_id }} </td>
+       <td> {{ order.status }} </td>
+    </tr>
+
+    {% endfor %}
+ </table>
+{% else %}
+<h4>You have no orders</h4>
+{% endif %}
+<hr>
+
+<h3>Your favorite products:</h3>
+{% if fav_products %}
+<table border = 1>
+    {% for product in fav_products %}
+    <tr>
+       <th> id </th>
+       <td> {{ product.id }} </td>
+        <td> <input type="button" value="See product" onclick="window.location.href='{{ url_for('product', product_id=product.id) }}'"> </td>
+    </tr>
+    {% endfor %}
+ </table>
+{% else %}
+<h4>You have no favorite products</h4>
+{% endif %}
+
+<hr>
+{% endblock %}

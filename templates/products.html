@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<table border = 1>
+    <tr>
+       <th> product_id </th>
+       <th> category </th>
+       <th> subcategory </th>
+       <th> brand </th>
+       <th> dimensions </th>
+       <th> stock </th>
+       <th> action </th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td> {{ product.id }} </td>
+        <td> {{ categories[categories[product.category_id - 1].parent_id - 1].name }} </td>
+        <td> {{ categories[product.category_id - 1].name }} </td>
+        <td> {{ product.brand }} </td>
+        <td> {{ product.height }} x {{ product.width }} x {{ product.length }} </td>
+        <td> {{ product.stock }} </td>
+        <td> <input type="button" value="See product" onclick="window.location.href='{{ url_for('product', product_id=product.id) }}'"> </td>
+    </tr>
+    {% endfor %}
+ </table>
+{% endblock %}

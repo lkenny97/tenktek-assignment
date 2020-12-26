@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if dialog %}
+<script>
+    alert("You have already submitted a review");
+</script>
+{% endif %}
+
+<h4>{{ categories[parent.parent_id - 1].name }} -> {{parent.name}}</h4>
+<h1>Product ID: {{ product.id }}</h1>
+<input type="button" value="BUY NOW" onclick="window.location.href='{{ url_for('buy_product', product_id=product.id) }}'">
+<form method="post">
+    <input name="add_to_cart" type="submit" value="Add to shopping cart">
+</form>
+{% if is_favorite %}
+<form method="post">
+    <input name="remove_from_fav" type="submit" value="Remove from Favorite">
+</form>
+{% else %}
+<form method="post">
+    <input name="add_to_fav" type="submit" value="Add to Favorite">
+</form>
+{% endif %}
+
+
+<h3>Stock: {{ product.stock }}</h3>
+<h3>Height: {{ product.height }}</h3>
+<h3>Width: {{ product.width }}</h3>
+<h3>Length: {{ product.length }}</h3>
+<h3>Rating: {{ product.rating }}</h3>
+<h3>Brand: {{ product.brand }}</h3>
+
+<h3>Reviews: </h3>
+<hr>
+{% for review in product.reviews %}
+    <h4>From: {{ review.user.name }}</h4>
+    <p>Review: {{ review.review_text }}</p>
+    <p>Rating: {{ review.rating }}</p>
+{% endfor %}
+
+<form method="post">
+    <input name="review" type="text" placeholder="Leave your review...">
+    <input name="rating" type="number" min="1" max="5" value="5">
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

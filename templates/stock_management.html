@@ -1,0 +1,56 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+
+{% if products %}
+<table border = 1>
+    <tr>
+       <th> product_id </th>
+       <th> category </th>
+       <th> subcategory </th>
+       <th> brand </th>
+       <th> dimensions </th>
+       <th> stock </th>
+       <th> action </th>
+    </tr>
+
+    {% for product in products %}
+    <tr>
+        <td> {{ product.id }} </td>
+        <td> {{ categories[categories[product.category_id - 1].parent_id - 1].name }} </td>
+        <td> {{ categories[product.category_id - 1].name }} </td>
+        <td> {{ product.brand }} </td>
+        <td> {{ product.height }} x {{ product.width }} x {{ product.length }} </td>
+        <td> {{ product.stock }} </td>
+        <td>
+            <form method="post">
+                <input type="submit" name="remove" value="Delete">
+                <input type="hidden" name="id" value="{{ product.id }}">
+            </form>
+            <form method="post">
+                <input type="submit" name="add_stock" value="Add +10 to stock">
+                <input type="hidden" name="id" value="{{ product.id }}">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+ </table>
+{% endif %}
+
+<form method="post">
+    <h2>Add new product</h2>
+    <select name="category">
+        {% for cat in categories %}
+            {% if cat.parent_id %}
+                <option value="{{ cat.id }}">{{ categories[cat.parent_id - 1].name }} -> {{cat.name}}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <input type="text" name="brand" placeholder="brand">
+    <input type="number" name="height" placeholder="height">
+    <input type="number" name="width" placeholder="width">
+    <input type="number" name="length" placeholder="length">
+    <input type="number" name="stock" placeholder="stock">
+    <input type="submit" value="Add">
+</form>
+{% endblock %}

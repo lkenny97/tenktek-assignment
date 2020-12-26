@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Shopping Cart</h1>
+<h3>Items in cart:</h3>
+{% if g.user.shopping_cart %}
+<table border = 1>
+    {% for product in g.user.shopping_cart %}
+    <tr>
+        <th> product_id </th>
+        <td> {{ product.product_id }} </td>
+        <td> <form method="post"><input type="submit" value="Remove" name="{{product.id}}"></form> </td>
+    </tr>
+    {% endfor %}
+ </table>
+{% else %}
+<h4>You do not have items in your shopping cart</h4>
+{% endif %}
+
+{% if g.user.shopping_cart %}
+<h1>PAYMENT INFO:</h1>
+<h2>Just kidding, you can buy it for free</h2>
+<form method="post">
+    <input type="submit" name="buy" value="Buy">
+</form>
+{% endif %}
+
+{% endblock %}

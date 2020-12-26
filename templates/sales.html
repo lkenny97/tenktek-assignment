@@ -1,0 +1,38 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+
+{% if sales %}
+<table border = 1>
+    <tr>
+       <th> sale_id </th>
+       <th> product_id </th>
+       <th> user_id </th>
+       <th> status </th>
+    </tr>
+
+    {% for sale in sales %}
+    <tr>
+        <td> {{ sale.id }} </td>
+        <td> {{ sale.product_id }} </td>
+        <td> {{ sale.user_id }} </td>
+        <td> {{ sale.status }} </td>
+        {% if sale.status == 'Preparing' %}
+        <td> <form method="post">
+            <input type="submit" value="Update status to [On the way]">
+            <input type="hidden" name="id" value="{{ sale.id }}">
+        </form> </td>
+         {% elif sale.status == 'On the way' %}
+        <td> <form method="post">
+            <input type="submit" value="Update status to [Delivered]" name="{{ sale.id }}">
+            <input type="hidden" name="id" value="{{ sale.id }}">
+        </form> </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+ </table>
+{% else %}
+<h3>You have no sales</h3>
+{% endif %}
+
+{% endblock %}

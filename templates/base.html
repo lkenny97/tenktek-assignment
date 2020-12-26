@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+        }
+
+        li {
+          float: left;
+        }
+
+        li a {
+          display: block;
+          padding: 8px;
+          background-color: #dddddd;
+        }
+
+        .centered {
+            margin: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <ul>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/shopping_cart">Shopping Cart ({{ g.user.shopping_cart|length }})</a></li>
+            <form method="post" action="/login"> <input type="submit" value="Sign out"> </form>
+        </ul>
+        {% block body %}{% endblock %}
+    </div>
+</body>
+</html>
